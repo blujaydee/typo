@@ -26,3 +26,10 @@ Given /^the following comments exist:$/ do |comments_table|
     Comment.create!(comment)
   end
 end
+
+Given /^I am logged into the non-admin panel$/ do
+  visit '/accounts/login'
+  fill_in 'user_login', :with => 'fake_user'
+  fill_in 'user_password', :with => 'fake_pw'
+  click_button 'Login'
+end

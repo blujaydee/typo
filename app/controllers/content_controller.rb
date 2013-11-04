@@ -16,12 +16,7 @@ class ContentController < ApplicationController
     end
   end
 
-  def merge
-    main_article = Article.find_by_id(params[:id])
-    main_article.merge_with(params[:merge_with])
-    flash[:notice] = "Articles merged successfully!"
-    redirect_to :action => :index
-  end
+  
 
   include LoginSystem
   before_filter :setup_themer

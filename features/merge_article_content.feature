@@ -5,13 +5,19 @@ Feature: Merge Articles
 
   Background:
     Given the blog is set up
-    And I am logged into the non-admin panel
     And the following articles exist:
     | title     | author     | body | id | published |
     | Hello     | author24   |  hi  |  1 |    t      |
     | World     | author25   |  bye |  2 |    t      |
 
-    
-  Scenario: A non-admin cannot merge two articles
+    And I am logged into the admin panel
+    And I follow "All Articles"
+    And I follow "Hello"
+    And I fill in "merge_with" with "2"
+    And I press "Merge"
+
+  Scenario: The merged article should contain the text of both.
     Given I am on the new article page
-    Then I should not see "Merge"
+    When I follow "All Articles"
+    When I follow "Hello"
+    Then I should see "hi"

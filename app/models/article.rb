@@ -297,12 +297,14 @@ class Article < Content
       if comments
         comments.each do |c|
           c.article_id = self.id
+          self.comments << c
           c.save!
         end
       end
-      secondary.destroy
+      
       self.save
-      return
+      secondary = Article.find_by_id(secondary_article)
+      secondary.destroy
     end
   end
 
