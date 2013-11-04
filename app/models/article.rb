@@ -294,10 +294,6 @@ class Article < Content
     comments = Comment.find_by_article_id(secondary_article)
     if secondary
       self.body = self.body + " " + secondary.body
-      comments.each do |c|
-        c.article_id = self.id
-        c.save!
-      end
       self.comments << comments
       
       self.save
