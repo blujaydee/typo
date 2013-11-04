@@ -289,6 +289,24 @@ class Article < Content
     end
   end
 
+  def merge_with(secondary_article)
+    secondary = Article.find_by_id(secondary_article)
+    comments = Comment.find_by_article_id(secondary_article)
+    if secondary
+      self.body = self.body + " " + secondary.body
+      if comments
+        comments.each do |c|
+          c.article_id = self.id
+          c.save!
+        end
+      end
+      secondary.destroy
+      self.save
+      return
+    end
+  end
+
+
   # Finds one article which was posted on a certain date and matches the supplied dashed-title
   # params is a Hash
   def self.find_by_permalink(params)

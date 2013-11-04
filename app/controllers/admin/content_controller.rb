@@ -23,6 +23,22 @@ class Admin::ContentController < Admin::BaseController
     end
   end
 
+  def merge
+    main_article = Article.find_by_id(params[:id])
+    if params[:id] == params[:merge_with]
+      flash[:notice] = "Cannot merge an article with itself!"
+      redirect_to :action => :index
+    elsif !Article.find_by_id(params[:merge_with])
+      flash[:notice] = "The target article does not exist!"
+      redirect_to :action => :index
+    else
+
+      main_article.merge_with(params[:merge_with])
+      flash[:notice] = "Articles merged successfully!"
+      redirect_to :action => :edit, :id => params[:id]
+    end
+  end
+
   def new
     new_or_edit
   end

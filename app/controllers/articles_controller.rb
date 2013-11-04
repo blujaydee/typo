@@ -81,6 +81,13 @@ class ArticlesController < ContentController
     end
   end
 
+  def merge
+    main_article = Article.find_by_id(params[:id])
+    main_article.merge_with(params[:merge_with])
+    flash[:notice] = "Articles merged successfully!"
+    redirect_to :action => :index
+  end
+
   def redirect
     from = split_from_path params[:from]
 

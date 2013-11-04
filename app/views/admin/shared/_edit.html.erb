@@ -4,3 +4,12 @@
   <%= render :partial => "form" %>
 
 <% end %>
+
+<% if User.find(session[:user_id]).profile.label == 'admin' %>
+  <% form_tag :action => 'merge', :id => @article.id do %>
+    <h3>Merge Articles</h3>
+    Article ID <%= text_field_tag 'merge_with' %>
+    <br>
+    <%= submit_tag "Merge" %>
+  <% end %>
+<% end %>
